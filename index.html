@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Studio Kalafrio – Tatuagem e Piercing</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
+<style>
+:root{--bg:#000;--bg2:#0e0e0e;--bg3:#1a1a1a;--ink:#fff;--mute:#9a9a9a;--line:#2e2e2e;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#000}}
+:root[data-theme="dark"]{--bg:#000}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(70px + env(safe-area-inset-top,0px))}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.65 "Barlow",system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+h1,h2,h3{font-weight:500}
+h2{font:600 clamp(2rem,5vw,3rem)/1.1 "Barlow Condensed",sans-serif;letter-spacing:.04em;margin-bottom:.5em}
+a{color:inherit}
+:focus-visible{outline:2px solid #fff;outline-offset:3px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{max-width:1160px;margin:auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font:400 1.8rem "Pirata One",serif;text-decoration:none;white-space:nowrap}
+nav{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+nav a{padding:6px 12px;text-decoration:none;font:500 .95rem "Barlow",sans-serif;color:var(--mute)}
+nav a:hover{color:#fff}
+nav a.cta{background:#fff;color:#000;margin-left:8px;font-weight:600}
+.wrap{max-width:1160px;margin:auto;padding:0 24px}
+section{padding:96px 0;border-top:1px solid var(--line)}
+section.alt{background:var(--bg2)}
+.hero{border:0;min-height:88vh;display:grid;place-items:center;text-align:center;position:relative;overflow:hidden;padding:60px 0}
+.hero::before{content:"";position:absolute;width:min(78vw,560px);aspect-ratio:1;border:1px solid #444;transform:rotate(45deg);box-shadow:0 0 0 14px #000,0 0 0 15px #2e2e2e}
+.hero .in{position:relative;padding:0 24px}
+.hero h1{font:400 clamp(4rem,15vw,9.5rem)/.95 "Pirata One",serif}
+.hero p{color:var(--mute);font-size:1.15rem;margin:18px auto 30px;max-width:30ch}
+.btn{display:inline-block;background:#fff;color:#000;border:2px solid #fff;padding:13px 28px;font:600 1rem "Barlow",sans-serif;text-decoration:none;cursor:pointer;border-radius:0}
+.btn:hover{background:#000;color:#fff}
+.btn.ghost{background:none;color:#fff;margin-left:8px}
+.btn.ghost:hover{background:#fff;color:#000}
+.btn:disabled{opacity:.35;cursor:not-allowed;background:#fff;color:#000}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.two p{color:#cfcfcf;max-width:52ch}
+p+p{margin-top:1em}
+.ph{background:var(--bg3);border:1px solid var(--line);display:grid;place-items:center;color:var(--mute);font-size:.9rem;text-align:center;padding:8px}
+.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px;margin-top:32px}
+.card .ph{aspect-ratio:3/4;font:400 3.2rem "Pirata One",serif;color:#fff;filter:grayscale(1)}
+.card img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(1)}
+.card h3{font:600 1.35rem "Barlow Condensed",sans-serif;letter-spacing:.05em;margin-top:10px}
+.card small{color:var(--mute)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}
+.tabs button{background:none;border:1px solid #444;color:#fff;padding:8px 18px;font:500 .95rem "Barlow",sans-serif;cursor:pointer}
+.tabs button:hover{border-color:#fff}
+.tabs button[aria-pressed="true"]{background:#fff;color:#000;border-color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.grid .ph{aspect-ratio:1}
+.grid img,.grid video{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(1);display:block}.mine{position:relative}.mine button{position:absolute;top:6px;right:6px;background:#fff;color:#000;border:0;padding:5px 10px;font:600 .8rem Barlow,sans-serif;cursor:pointer}
+form{display:grid;gap:18px;max-width:660px;margin-top:28px}
+label{display:grid;gap:6px;font-weight:600;font-size:.95rem}
+input,select,textarea{font:400 1rem "Barlow",sans-serif;padding:13px;border:1px solid #444;border-radius:0;background:#000;color:#fff;width:100%}
+input:focus,select:focus,textarea:focus{border-color:#fff}
+textarea{min-height:120px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+#prev{max-width:180px;display:none;filter:grayscale(1)}
+.hint{font-size:.88rem;color:var(--mute);font-weight:400}
+.info p{margin-bottom:1em}
+.info a{text-decoration:underline;text-underline-offset:3px}
+.map{display:block;position:relative;width:100%;aspect-ratio:4/3;border:1px solid var(--line);background:var(--bg3);overflow:hidden;text-decoration:none}.map:hover{border-color:#fff}.maplabel{position:absolute;left:0;right:0;bottom:0;padding:14px 18px;background:rgba(0,0,0,.85);border-top:1px solid var(--line);font-size:.95rem}.credit a{color:#fff;font-weight:600;text-underline-offset:3px}
+dialog{background:#0e0e0e;color:#fff;border:1px solid #555;padding:26px;max-width:580px;width:calc(100% - 32px);max-height:88vh;overflow:auto;margin:auto}dialog::backdrop{background:rgba(0,0,0,.85)}dialog form{margin-top:12px}
+.stars{letter-spacing:2px}.rev{border-top:1px solid var(--line);padding:14px 0}.rev p{color:#cfcfcf}
+.rbar{margin-top:64px;border:1px solid var(--line);padding:26px 28px;display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap}.rbar b{font:600 2.6rem/1 "Barlow Condensed",sans-serif;margin-right:8px}.rbar .stars{font-size:1.4rem}
+footer{border-top:1px solid var(--line);padding:32px 24px;text-align:center;color:var(--mute);font-size:.9rem}
+@media(max-width:760px){.two,.row{grid-template-columns:1fr;gap:32px}.bar{flex-direction:column;align-items:flex-start}nav{justify-content:flex-start}nav a{padding:6px 8px}nav a.cta{margin-left:0}.btn.ghost{margin:12px 0 0}section{padding:64px 0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+<a class="logo" href="#inicio">Kalafrio</a>
+<nav aria-label="Principal">
+<a href="#inicio">Início</a><a href="#estudio">Estúdio</a><a href="#historia">História</a><a href="#equipe">Equipe</a><a href="#galeria">Galeria</a><a href="#piercing">Piercing</a><a href="#contato">Contato</a><a class="cta" href="#orcamento">Orçamento</a>
+</nav></div></header>
+
+<main>
+<section id="inicio" class="hero"><div class="in">
+<h1>Kalafrio</h1>
+<p>Studio de tatuagem e piercing em Gonçalves Chaves.</p>
+<a class="btn" href="#orcamento">Pedir orçamento</a><a class="btn ghost" href="#galeria">Ver trabalhos</a>
+</div></section>
+
+<section id="estudio" class="alt"><div class="wrap two">
+<div><h2>O estúdio</h2>
+<p>Um espaço limpo, reservado e pensado para você se sentir à vontade do primeiro traço até a cicatrização.</p>
+<p>Materiais descartáveis, esterilização rigorosa e uma equipe com estilos variados: fineline, blackwork, oriental, realismo e muito mais. Também fazemos piercing.</p></div>
+<div class="ph" style="aspect-ratio:4/3">Foto do estúdio</div>
+</div></section>
+
+<section id="historia"><div class="wrap two">
+<div class="ph" style="aspect-ratio:4/3">Foto da nossa história</div>
+<div><h2>História</h2>
+<p>O Kalafrio nasceu do arrepio que dá quando uma ideia vira pele. Reunimos artistas que levam o ofício a sério e tratam cada cliente como único.</p>
+<p class="hint">Texto provisório. Me conte como tudo começou e eu ajusto.</p></div>
+</div></section>
+
+<section id="equipe" class="alt"><div class="wrap"><h2>Equipe</h2>
+<p style="color:#cfcfcf">Nove artistas, cada um com seu traço.</p>
+<div class="team" id="team"></div></div></section>
+
+<section id="galeria"><div class="wrap"><h2>Galeria</h2>
+<p style="color:#cfcfcf">Escolha um artista para ver os trabalhos dele.</p>
+<div class="tabs" id="tabs" role="group" aria-label="Filtrar por artista"></div>
+<div class="grid" id="grid" aria-live="polite"></div>
+<div class="rbar"><div><b id="avg">–</b><span class="stars" id="avst">☆☆☆☆☆</span><br><span class="hint" id="cnt"></span></div><button class="btn" id="openrev" type="button">Ver e deixar avaliação</button></div></div></section>
+
+<section id="piercing" class="alt"><div class="wrap two">
+<div><h2>Piercing</h2>
+<p>Perfurações com agulha, joias de titânio e orientação de cuidados depois. Orelha, nariz, umbigo, sobrancelha e mais.</p>
+<p>Para fazer o seu, peça um orçamento e conte na descrição que é piercing.</p></div>
+<div class="ph" style="aspect-ratio:4/3">Foto de piercing</div>
+</div></section>
+
+<section id="orcamento"><div class="wrap"><h2>Orçamento</h2>
+<p style="color:#cfcfcf">Tatuagem ou piercing: preencha tudo e envie. Seus dados vão direto para o WhatsApp do estúdio.</p>
+<form id="f" novalidate>
+<label>Profissional
+<select id="pro" required><option value="">Escolha...</option></select></label>
+<label>Nome completo<input id="nome" required autocomplete="name"></label>
+<label>Telefone com DDD<input id="tel" required inputmode="tel" placeholder="(53) 99999-9999" autocomplete="tel"></label>
+<label>Descrição da ideia<textarea id="desc" required placeholder="Conte o que você quer fazer"></textarea></label>
+<div class="row">
+<label>Tamanho estimado<input id="tam" required placeholder="Ex.: 15 cm"></label>
+<label>Local do corpo<input id="local" required placeholder="Ex.: braço, perna, costas"></label>
+</div>
+<label>Foto de referência<input id="foto" type="file" accept="image/*" required>
+<span class="hint">Depois de abrir o WhatsApp, anexe esta foto na conversa.</span></label>
+<img id="prev" alt="Prévia da referência">
+<div><button class="btn" id="send" type="submit" disabled>Enviar pelo WhatsApp</button>
+<p class="hint" id="msg" role="status" style="margin-top:10px">Preencha todos os campos para liberar o envio.</p></div>
+</form></div></section>
+
+<section id="contato" class="alt"><div class="wrap two">
+<div class="info"><h2>Contato</h2>
+<p>Studio Kalafrio<br>Gonçalves Chaves, Pelotas – RS</p>
+<p>Instagram: <a href="https://www.instagram.com/kalafrio.co/" target="_blank" rel="noopener">@kalafrio.co</a><br>
+WhatsApp: <a href="#" id="wa" target="_blank" rel="noopener">em breve</a></p>
+<p><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Gon%C3%A7alves+Chaves%2C+Pelotas+RS" target="_blank" rel="noopener" style="text-decoration:none">Abrir no Google Maps</a></p>
+<p class="hint">Horários e endereço completo: a definir.</p></div>
+<a class="map" href="https://www.google.com/maps/search/?api=1&query=Gon%C3%A7alves+Chaves%2C+Pelotas+RS" target="_blank" rel="noopener" aria-label="Abrir localização no Google Maps"><svg viewBox="0 0 400 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g stroke="#2e2e2e" stroke-width="2" fill="none"><path d="M0 70H400M0 150H400M0 230H400M80 0V300M200 0V300M320 0V300"/><path d="M0 260L400 40M0 20L260 300" stroke="#444" stroke-width="3"/></g><g transform="translate(200 150)"><path d="M0 40C-30 0-34-10-34-24a34 34 0 0 1 68 0c0 14-4 24-34 64z" fill="#fff"/><circle cy="-24" r="12" fill="#000"/></g></svg><span class="maplabel">Gonçalves Chaves, Pelotas – RS<br><b>Abrir no Google Maps</b></span></a>
+</div></section>
+</main>
+<dialog id="dr" aria-label="Avaliações"><h2>Avaliações</h2><div id="rl"></div>
+<form id="rf"><label>Seu nome<input id="rn" required></label>
+<label>Nota<select id="rs"><option value="5">★★★★★ (5)</option><option value="4">★★★★☆ (4)</option><option value="3">★★★☆☆ (3)</option><option value="2">★★☆☆☆ (2)</option><option value="1">★☆☆☆☆ (1)</option></select></label>
+<label>Comentário<textarea id="rt" required></textarea></label>
+<div><button class="btn" type="submit">Publicar avaliação</button><button class="btn ghost" type="button" data-close>Fechar</button></div></form></dialog>
+<dialog id="da" aria-label="Área do artista"><h2>Área do artista</h2>
+<form id="lf"><label>Nome<input id="ln" autocomplete="username" required></label><label>Senha<input id="lp" type="password" autocomplete="current-password" required></label>
+<div><button class="btn" type="submit">Entrar</button><button class="btn ghost" type="button" data-close>Fechar</button></div><p class="hint" id="le" role="alert"></p></form>
+<div id="panel" hidden><p id="who" style="margin-bottom:12px"></p>
+<label>Adicionar fotos ou vídeos<input id="up" type="file" accept="image/*,video/*" multiple></label>
+<div class="grid" id="mine" style="margin-top:18px"></div>
+<p style="margin-top:18px"><button class="btn" id="out" type="button">Sair</button><button class="btn ghost" type="button" data-close>Fechar</button></p>
+<p class="hint" style="margin-top:14px">Modo demonstração: as postagens ficam salvas só neste navegador. Para aparecerem para todos os visitantes, o site precisa de um servidor (próximo passo).</p></div></dialog>
+<footer>© Studio Kalafrio · <a href="https://www.instagram.com/kalafrio.co/" target="_blank" rel="noopener">@kalafrio.co</a><p style="margin-top:8px"><a href="#artista" id="al">Área do artista</a></p><p class="credit" style="margin-top:8px">Site criado por <a href="https://wa.me/5553992104960" target="_blank" rel="noopener">Pietro</a></p></footer>
+
+<script>
+// Troque pelos dados reais do estúdio
+var WHATSAPP="5553900000000"; // 55 + DDD + número
+var ARTISTS=["Amanda","Vortex","Adam","Nana","Max","GioInk","Karol","Nando","Jujulz"];
+// Fotos: ARTIST_PHOTO["Amanda"]="url"; GALLERY["Amanda"]=["url1","url2"];
+var ARTIST_PHOTO={},GALLERY={};
+var $=function(i){return document.getElementById(i)};
+
+$("team").innerHTML=ARTISTS.map(function(a){
+ var p=ARTIST_PHOTO[a];
+ return '<div class="card">'+(p?'<img src="'+p+'" alt="'+a+'">':'<div class="ph">'+a[0]+'</div>')+'<h3>'+a+'</h3><small>Artista</small></div>';
+}).join("");
+$("pro").innerHTML+=ARTISTS.map(function(a){return '<option>'+a+'</option>'}).join("");
+
+var cur=ARTISTS[0];
+function idb(){return new Promise(function(ok,no){try{var r=indexedDB.open("kalafrio",1);r.onupgradeneeded=function(){r.result.createObjectStore("m",{keyPath:"id"})};r.onsuccess=function(){ok(r.result)};r.onerror=no}catch(e){no(e)}})}
+function tx(mode,fn){return idb().then(function(d){return new Promise(function(ok,no){var st=d.transaction("m",mode).objectStore("m"),q=fn(st);q.onsuccess=function(){ok(q.result)};q.onerror=no})})}
+function all(){return tx("readonly",function(s){return s.getAll()}).catch(function(){return[]})}
+function tile(m,mine){var w=document.createElement("div");w.className="mine";var e=document.createElement(m.type==="video"?"video":"img"),u=URL.createObjectURL(m.blob);e.src=u;
+ if(m.type==="video"){e.controls=true;e.preload="metadata"}else{e.alt="Trabalho de "+m.artist;e.loading="lazy"}
+ w.appendChild(e);
+ if(mine){var b=document.createElement("button");b.type="button";b.textContent="Remover";b.onclick=function(){if(confirm("Remover esta postagem?"))tx("readwrite",function(s){return s.delete(m.id)}).then(function(){drawMine();show(cur)})};w.appendChild(b)}
+ return w}
+function show(a){cur=a;
+ [].forEach.call($("tabs").children,function(b){b.setAttribute("aria-pressed",b.textContent===a)});
+ all().then(function(l){var g=$("grid");g.textContent="";
+  var it=l.filter(function(x){return x.artist===a}).sort(function(x,y){return y.ts-x.ts});
+  if(!it.length){g.innerHTML=[1,2,3,4,5,6].map(function(){return '<div class="ph">Fotos de '+a+' em breve</div>'}).join("");return}
+  it.forEach(function(m){g.appendChild(tile(m,false))})})}
+ARTISTS.forEach(function(a){
+ var b=document.createElement("button");b.type="button";b.textContent=a;b.onclick=function(){show(a)};$("tabs").appendChild(b);
+});
+show(ARTISTS[0]);
+
+var ids=["pro","nome","tel","desc","tam","local","foto"];
+function ok(){
+ var tel=$("tel").value.replace(/\D/g,"");
+ return ids.every(function(i){var e=$(i);return i==="foto"?e.files.length>0:e.value.trim()!==""})&&tel.length>=10;
+}
+function check(){$("send").disabled=!ok()}
+ids.forEach(function(i){$(i).addEventListener("input",check);$(i).addEventListener("change",check)});
+$("foto").addEventListener("change",function(){
+ var f=this.files[0],p=$("prev");
+ if(f){p.src=URL.createObjectURL(f);p.style.display="block"}else p.style.display="none";
+});
+$("f").addEventListener("submit",function(e){
+ e.preventDefault();
+ if(!ok()){$("msg").textContent="Preencha todos os campos, incluindo telefone com DDD e a foto.";return}
+ var t="Olá! Vim do site do Studio Kalafrio e gostaria de fazer um orçamento.\n\nProfissional: "+$("pro").value+
+  "\nNome: "+$("nome").value.trim()+"\nTelefone: "+$("tel").value.trim()+"\nDescrição: "+$("desc").value.trim()+
+  "\nTamanho: "+$("tam").value.trim()+"\nLocal do corpo: "+$("local").value.trim()+"\nFoto de referência: vou anexar na conversa.";
+ window.open("https://api.whatsapp.com/send?phone="+WHATSAPP+"&text="+encodeURIComponent(t),"_blank","noopener");
+ $("msg").textContent="Abrimos o WhatsApp. Lembre de anexar a foto de referência.";
+});
+$("wa").href="https://wa.me/"+WHATSAPP;
+
+/* Avaliações (demo: salvas neste navegador) */
+function revs(){try{return JSON.parse(localStorage.getItem("kf_rev")||"[]")}catch(e){return[]}}
+function st(n){return "★★★★★".slice(0,n)+"☆☆☆☆☆".slice(0,5-n)}
+function drawRev(){var l=revs(),n=l.length,sum=l.reduce(function(a,r){return a+r.n},0),box=$("rl");
+ $("avg").textContent=n?(sum/n).toFixed(1).replace(".",","):"–";$("avst").textContent=st(n?Math.round(sum/n):0);
+ $("cnt").textContent=n?n+(n>1?" avaliações":" avaliação"):"Seja o primeiro a avaliar";
+ box.textContent="";if(!n){box.textContent="Ainda não há avaliações."}
+ l.slice().reverse().forEach(function(r){var d=document.createElement("div"),h=document.createElement("b"),s2=document.createElement("span"),p=document.createElement("p");d.className="rev";h.textContent=r.name+" ";s2.className="stars";s2.textContent=st(r.n);p.textContent=r.text;d.appendChild(h);d.appendChild(s2);d.appendChild(p);box.appendChild(d)})}
+function openD(d){if(!d.open){try{d.showModal()}catch(e){d.setAttribute("open","")}}}
+$("openrev").onclick=function(){drawRev();openD($("dr"))};
+$("rf").addEventListener("submit",function(e){e.preventDefault();
+ var l=revs();l.push({name:$("rn").value.trim(),n:+$("rs").value,text:$("rt").value.trim(),ts:Date.now()});
+ try{localStorage.setItem("kf_rev",JSON.stringify(l))}catch(x){}
+ $("rn").value="";$("rt").value="";drawRev()});
+drawRev();
+[].forEach.call(document.querySelectorAll("[data-close]"),function(b){b.onclick=function(){b.closest("dialog").close()}});
+
+/* Área do artista (demo) — TROQUE as senhas */
+var PASS={Amanda:"123355",Vortex:"123456",Adam:"123456",Nana:"123456",Max:"123456",GioInk:"123456",Karol:"123456",Nando:"123456",Jujulz:"123456"};
+var me=null;
+function drawMine(){var g=$("mine");g.textContent="";if(!me)return;
+ all().then(function(l){var it=l.filter(function(x){return x.artist===me}).sort(function(x,y){return y.ts-x.ts});
+  if(!it.length)g.innerHTML='<p class="hint">Você ainda não postou nada.</p>';
+  it.forEach(function(m){g.appendChild(tile(m,true))})})}
+function panel(){$("lf").hidden=!!me;$("panel").hidden=!me;if(me){$("who").textContent="Olá, "+me+"!";drawMine()}}
+$("lf").addEventListener("submit",function(e){e.preventDefault();
+ var k=ARTISTS.filter(function(a){return a.toLowerCase()===$("ln").value.trim().toLowerCase()})[0];
+ if(k&&PASS[k]===$("lp").value){me=k;$("le").textContent="";$("lp").value="";panel()}else $("le").textContent="Nome ou senha incorretos."});
+$("out").onclick=function(){me=null;panel()};
+$("up").addEventListener("change",function(){var fs=[].slice.call(this.files),inp=this;
+ Promise.all(fs.map(function(f,i){if(f.size>50*1024*1024){alert(f.name+" passa de 50 MB.");return}
+  return tx("readwrite",function(s){return s.put({id:Date.now()+"-"+i+"-"+Math.random(),artist:me,type:f.type.indexOf("video")===0?"video":"image",blob:f,ts:Date.now()})})}))
+ .then(function(){inp.value="";drawMine();show(cur)},function(){alert("Não foi possível salvar neste navegador.")})});
+function route(){if(location.hash==="#artista"){panel();openD($("da"))}}
+$("al").addEventListener("click",function(){setTimeout(route,0)});window.addEventListener("hashchange",route);route();
+</script>
+</body>
+</html>
