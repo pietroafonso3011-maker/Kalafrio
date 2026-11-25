@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101010">
+  <meta name="description" content="Painel dos artistas do Studio Kalafrio: perfil, foto e galeria.">
+  <title>Painel dos artistas — Kalafrio</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&family=Playfair+Display:wght@500;600&display=swap">
+  <style>
+    :root{color-scheme:dark;--ink:#f6f5f2;--muted:#a5a39f;--panel:#181818;--panel2:#20201f;--line:#333230;--paper:#e9e7e2;--black:#101010;--soft:#c9c6bf;--radius:18px;font-family:Barlow,system-ui,sans-serif;background:var(--black);color:var(--ink)}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--black)}body{font-size:16px;line-height:1.5}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #fff;outline-offset:3px} [hidden]{display:none!important}
+    .shell{min-height:100vh;display:grid;grid-template-columns:275px minmax(0,1fr)}
+    .side{position:sticky;top:0;height:100vh;background:#141414;border-right:1px solid var(--line);padding:30px 18px 22px;display:flex;flex-direction:column;z-index:5}
+    .brand{display:flex;align-items:center;gap:12px;padding:0 10px 32px;text-decoration:none}.brand-mark{width:38px;height:38px;display:grid;place-items:center;border:1px solid #797771;transform:rotate(45deg);font:600 18px 'Playfair Display',serif}.brand-mark span{transform:rotate(-45deg)}.brand-name{font:600 24px 'Playfair Display',serif;letter-spacing:.02em}.brand-sub{display:block;color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin-top:1px}
+    .side-label{font-size:10px;color:#77756f;text-transform:uppercase;letter-spacing:.18em;padding:0 12px 10px}.nav{display:grid;gap:5px}.nav button{border:0;background:none;color:#aaa8a2;text-align:left;padding:12px 13px;border-radius:11px;font-size:15px;display:flex;align-items:center;gap:12px;transition:.18s ease}.nav button:hover{background:#222;color:#fff}.nav button.active{background:#f0efec;color:#171717;font-weight:700}.nav-ico{width:20px;height:20px;display:inline-grid;place-items:center;font-size:16px}.side-bottom{margin-top:auto}.side-note{border-top:1px solid var(--line);padding:17px 11px;color:var(--muted);font-size:12px}.side-note b{color:#e6e4df;font-weight:600}.profile-mini{display:flex;gap:10px;align-items:center;padding:13px 11px;border-top:1px solid var(--line);min-width:0}.avatar-mini{width:39px;height:39px;border-radius:50%;background:#292826;display:grid;place-items:center;overflow:hidden;flex:none;font:600 16px 'Barlow Condensed',sans-serif}.avatar-mini img{width:100%;height:100%;object-fit:cover;filter:grayscale(1)}.mini-name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-label{font-size:11px;color:var(--muted)}
+    .main{min-width:0;padding:0 52px 64px;max-width:1440px;width:100%;margin:0 auto}.top{display:flex;justify-content:space-between;align-items:center;padding:28px 0 22px;border-bottom:1px solid var(--line);gap:18px}.crumb{font-size:13px;color:var(--muted)}.crumb b{color:#f1efeb;font-weight:500}.top-actions{display:flex;gap:10px;align-items:center}.back-link,.logout{background:none;border:1px solid var(--line);color:#e9e7e2;padding:9px 14px;border-radius:999px;text-decoration:none;font-size:13px}.back-link:hover,.logout:hover{border-color:#85827c;background:#1b1b1a}.content{padding-top:36px}.eyebrow{color:#8f8c85;text-transform:uppercase;letter-spacing:.19em;font-size:11px;font-weight:600}.title-row{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin:8px 0 27px}.title{font:500 clamp(33px,4.2vw,52px)/1.08 'Playfair Display',serif;letter-spacing:-.025em;margin:0}.subtitle{color:var(--muted);margin:9px 0 0;max-width:590px}.date-pill{border:1px solid var(--line);padding:8px 12px;border-radius:999px;color:#c7c4bd;font-size:12px;white-space:nowrap}
+    .welcome{display:flex;align-items:center;justify-content:space-between;gap:24px;background:linear-gradient(115deg,#252524,#171716 75%);border:1px solid #393836;border-radius:var(--radius);padding:30px 34px;position:relative;overflow:hidden;margin-bottom:22px}.welcome:after{content:'K';position:absolute;right:38px;top:-60px;color:rgba(255,255,255,.035);font:500 280px/.9 'Playfair Display',serif;pointer-events:none}.welcome-copy{position:relative;z-index:1}.welcome h2{font:500 clamp(26px,3vw,36px)/1.1 'Playfair Display',serif;margin:0 0 8px}.welcome p{color:#b9b6ae;margin:0;max-width:560px}.welcome-mark{position:relative;z-index:1;width:90px;height:90px;border:1px solid #77756e;display:grid;place-items:center;transform:rotate(45deg);flex:none}.welcome-mark span{transform:rotate(-45deg);font:500 30px 'Playfair Display',serif}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:26px}.stat{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:19px 21px;min-height:112px}.stat-label{color:var(--muted);font-size:12px;letter-spacing:.03em}.stat-value{font:600 30px/1.15 'Barlow Condensed',sans-serif;margin-top:13px}.stat-note{color:#86837d;font-size:12px;margin-top:3px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:34px 0 14px}.section-head h2{font:600 20px 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;margin:0}.section-head a{color:#d5d2cb;font-size:13px;text-underline-offset:4px}.short-grid,.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.work-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;position:relative}.work-media{width:100%;aspect-ratio:4/3;display:block;object-fit:cover;filter:grayscale(1);background:#262624}.work-info{padding:11px 13px 13px;display:flex;align-items:center;justify-content:space-between;gap:8px}.work-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.work-date{font-size:11px;color:var(--muted);white-space:nowrap}.empty{border:1px dashed #494743;border-radius:14px;padding:28px;text-align:center;color:var(--muted);grid-column:1/-1}
+    .surface{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px}.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.72fr);gap:19px;align-items:start}.form-stack{display:grid;gap:17px}.field{display:grid;gap:7px}.field label{font-size:13px;color:#dedbd5;font-weight:600}.field small{font-size:12px;color:var(--muted)}input,select,textarea{width:100%;border:1px solid #41403d;background:#101010;color:#f4f2ee;border-radius:10px;padding:12px 14px;min-height:46px}input::placeholder,textarea::placeholder{color:#696760}textarea{min-height:116px;resize:vertical}.btn{border:1px solid #eceae6;background:#eceae6;color:#171717;padding:11px 17px;border-radius:999px;font-weight:700;font-size:13px;transition:.18s ease}.btn:hover{background:#fff;transform:translateY(-1px)}.btn.secondary{background:transparent;color:#efede8;border-color:#4b4945}.btn.secondary:hover{background:#272624;border-color:#78756e}.btn.danger{color:#f0eeeb;border-color:#51403e;background:#261e1d}.btn.danger:hover{background:#392523}.btn:disabled{opacity:.55;cursor:wait;transform:none}.form-foot{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.status{font-size:13px;color:#c8c5be;min-height:19px}.status.error{color:#f09b91}.status.success{color:#b9d3bb}
+    .avatar-edit{padding:27px;text-align:center}.avatar-large{width:148px;height:148px;margin:4px auto 18px;background:#262624;border-radius:50%;border:1px solid #4b4945;display:grid;place-items:center;overflow:hidden;font:500 44px 'Playfair Display',serif;color:#eee}.avatar-large img{width:100%;height:100%;object-fit:cover;filter:grayscale(1)}.avatar-edit h3{margin:0;font-size:17px}.avatar-edit p{font-size:13px;color:var(--muted);margin:5px 0 19px}.avatar-edit input{display:none}.upload-box{border:1px dashed #56544f;border-radius:15px;background:#151514;text-align:center;padding:30px 20px;transition:.18s ease}.upload-box.drag{border-color:#fff;background:#20201e}.upload-icon{font-size:24px;color:#d5d2cb;margin-bottom:9px}.upload-box h3{font:600 18px 'Barlow Condensed',sans-serif;margin:0 0 5px}.upload-box p{font-size:13px;color:var(--muted);margin:0 0 16px}.upload-box input{display:none}.upload-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:18px}.remove{position:absolute;top:10px;right:10px;background:rgba(16,16,16,.88);color:#fff;border:1px solid #555;border-radius:999px;padding:7px 11px;font-size:11px}.remove:hover{background:#fff;color:#111}.security-box{display:flex;align-items:flex-start;gap:15px;border:1px solid #494741;border-radius:13px;padding:17px;background:#1b1b19}.lock{width:36px;height:36px;display:grid;place-items:center;border:1px solid #5b5953;border-radius:50%;flex:none}.security-box b{display:block;font-size:14px}.security-box p{margin:3px 0 0;color:var(--muted);font-size:12px}
+    .login-screen{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}.login-art{background:#161615;position:relative;display:flex;align-items:flex-end;padding:8vw;overflow:hidden;border-right:1px solid var(--line)}.login-art:before,.login-art:after{content:'';position:absolute;border:1px solid #44413b;transform:rotate(45deg);width:min(55vw,520px);height:min(55vw,520px);left:50%;top:42%;translate:-50% -50%}.login-art:after{width:min(43vw,405px);height:min(43vw,405px);border-color:#2f2e2b}.login-copy{position:relative;z-index:1;max-width:460px}.login-copy .brand{padding:0 0 42px}.login-copy h1{font:500 clamp(54px,8vw,100px)/.92 'Playfair Display',serif;margin:0 0 18px;letter-spacing:-.05em}.login-copy p{max-width:400px;color:#b5b2aa}.login-copy .micro{margin-top:45px;color:#87847d;font-size:11px;letter-spacing:.16em;text-transform:uppercase}.login-form-side{display:grid;place-items:center;padding:40px 28px}.login-card{width:min(100%,410px);padding:10px}.login-card h2{font:500 34px 'Playfair Display',serif;margin:0 0 6px}.login-card>p{color:var(--muted);margin:0 0 27px}.login-card .field{margin-bottom:16px}.login-note{margin-top:20px;padding:14px 15px;border:1px solid #3c3a36;border-radius:11px;background:#171716;color:#bcb9b2;font-size:12px}.login-note b{color:#f2f0ec}.login-note span{display:block;color:#f3f1ed;margin-top:5px;font-weight:700;letter-spacing:.12em}.login-footer{color:#74716b;font-size:12px;margin-top:35px;text-align:center}
+    .force-screen{min-height:100vh;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 50% 0,#262624,#101010 48%)}.force-card{width:min(100%,490px);background:#191918;border:1px solid #41403c;border-radius:20px;padding:34px;box-shadow:0 28px 80px #0008}.force-mark{width:48px;height:48px;display:grid;place-items:center;border:1px solid #6e6b63;transform:rotate(45deg);margin:6px 0 29px}.force-mark span{transform:rotate(-45deg);font:500 20px 'Playfair Display',serif}.force-card h1{font:500 34px/1.1 'Playfair Display',serif;margin:0 0 10px}.force-card>p{color:var(--muted);margin:0 0 23px}.force-card form{display:grid;gap:15px}.force-signout{background:none;border:0;color:#c0bdb5;text-decoration:underline;text-underline-offset:3px;margin-top:18px;font-size:13px}
+    .mobile-bar{display:none}.toast{position:fixed;right:22px;bottom:22px;background:#efede8;color:#151515;padding:13px 18px;border-radius:12px;box-shadow:0 8px 24px #0008;z-index:30;font-weight:600;font-size:13px;max-width:min(400px,calc(100vw - 40px))}
+    @media(max-width:1050px){.main{padding-left:30px;padding-right:30px}.shell{grid-template-columns:230px minmax(0,1fr)}.short-grid,.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:760px){.shell{display:block;padding-bottom:75px}.side{display:none}.main{padding:0 19px 40px}.top{padding:18px 0 15px}.content{padding-top:25px}.title-row{align-items:flex-start}.date-pill{display:none}.welcome{padding:23px 22px}.welcome-mark{width:59px;height:59px}.welcome-mark span{font-size:22px}.welcome:after{right:-8px;top:-32px;font-size:180px}.stats{gap:8px}.stat{padding:14px;min-height:96px}.stat-value{font-size:25px}.stat-label{font-size:11px}.stat-note{font-size:10px}.section-head{margin-top:27px}.split{grid-template-columns:1fr}.avatar-edit{display:flex;align-items:center;text-align:left;gap:17px;padding:17px}.avatar-large{width:72px;height:72px;margin:0;font-size:24px}.avatar-edit>div:nth-child(2){flex:1}.avatar-edit p{margin:3px 0 0}.avatar-edit .btn{padding:8px 12px}.short-grid,.gallery-grid{gap:10px}.mobile-bar{position:fixed;bottom:0;left:0;right:0;z-index:12;display:grid;grid-template-columns:repeat(4,1fr);background:#141414;border-top:1px solid var(--line);padding:7px 8px max(8px,env(safe-area-inset-bottom))}.mobile-bar button{border:0;background:transparent;color:#aaa8a2;display:grid;justify-items:center;gap:3px;font-size:10px;padding:5px 2px}.mobile-bar button.active{color:#fff}.mobile-bar .nav-ico{font-size:17px}.login-screen{grid-template-columns:1fr}.login-art{min-height:240px;padding:26px;border-right:0;border-bottom:1px solid var(--line)}.login-art:before{width:240px;height:240px;left:auto;right:-15px;top:40%;translate:0 -50%}.login-art:after{width:180px;height:180px;left:auto;right:15px;top:40%;translate:0 -50%}.login-copy .brand{padding:0 0 27px}.login-copy h1{font-size:52px;margin-bottom:10px}.login-copy p{font-size:14px;max-width:310px}.login-copy .micro{display:none}.login-form-side{padding:29px 22px;align-items:start}.login-card{padding:0}.login-card h2{font-size:30px}.force-card{padding:26px 22px}.force-card h1{font-size:30px}.force-card .force-mark{margin-bottom:24px}.top-actions .back-link{display:none}}
+    @media(max-width:390px){.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:1/-1}.title{font-size:33px}.welcome-mark{display:none}.gallery-grid,.short-grid{grid-template-columns:1fr 1fr}.work-date{display:none}.work-info{padding:9px}.work-title{font-size:12px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main id="loginScreen" class="login-screen">
+    <section class="login-art" aria-label="Kalafrio">
+      <div class="login-copy">
+        <a class="brand" href="/" aria-label="Kalafrio — página inicial"><span class="brand-mark"><span>K</span></span><span><span class="brand-name">Kalafrio</span><span class="brand-sub">Studio · Artistas</span></span></a>
+        <h1>Seu traço.<br>Sua casa.</h1>
+        <p>Um espaço para cuidar do seu perfil, mostrar o que você cria e manter sua galeria sempre viva.</p>
+        <div class="micro">Painel dos artistas · Pelotas, RS</div>
+      </div>
+    </section>
+    <section class="login-form-side">
+      <form id="loginForm" class="login-card">
+        <div class="eyebrow">Área reservada</div>
+        <h2>Entrar no painel</h2>
+        <p>Acesse com seu nome e senha de artista.</p>
+        <div class="field"><label for="artistName">Artista</label><select id="artistName" required><option value="">Carregando artistas…</option></select></div>
+        <div class="field"><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Digite sua senha" required></div>
+        <div id="loginStatus" class="status" role="status" aria-live="polite"></div>
+        <button id="loginButton" class="btn" type="submit" style="width:100%;margin-top:5px">Entrar <span aria-hidden="true">→</span></button>
+        <div class="login-note"><b>Primeiro acesso?</b> Use a senha temporária informada pelo estúdio e crie uma senha pessoal logo ao entrar.</div>
+        <div class="login-footer"><a href="/" style="text-underline-offset:3px">Voltar ao site do estúdio</a></div>
+      </form>
+    </section>
+  </main>
+
+  <main id="forceScreen" class="force-screen" hidden>
+    <section class="force-card">
+      <div class="force-mark"><span>K</span></div>
+      <div class="eyebrow">Segurança da conta</div>
+      <h1>Crie sua senha pessoal</h1>
+      <p>Antes de usar o painel, troque a senha temporária por uma senha só sua. Ela será usada nos próximos acessos.</p>
+      <form id="forcePasswordForm">
+        <div class="field"><label for="firstCurrent">Senha atual</label><input id="firstCurrent" type="password" autocomplete="current-password" required></div>
+        <div class="field"><label for="firstNew">Nova senha</label><input id="firstNew" type="password" minlength="8" autocomplete="new-password" placeholder="Pelo menos 8 caracteres" required></div>
+        <div class="field"><label for="firstConfirm">Confirme a nova senha</label><input id="firstConfirm" type="password" minlength="8" autocomplete="new-password" required></div>
+        <div id="forceStatus" class="status" role="status" aria-live="polite"></div>
+        <button id="forceSave" class="btn" type="submit" style="width:100%">Salvar senha e continuar</button>
+      </form>
+      <button id="forceLogout" class="force-signout" type="button">Sair desta conta</button>
+    </section>
+  </main>
+
+  <div id="workspace" class="shell" hidden>
+    <aside class="side">
+      <a class="brand" href="/" aria-label="Kalafrio — página inicial"><span class="brand-mark"><span>K</span></span><span><span class="brand-name">Kalafrio</span><span class="brand-sub">Studio · Artistas</span></span></a>
+      <div class="side-label">Seu espaço</div>
+      <nav id="desktopNav" class="nav" aria-label="Navegação do painel"></nav>
+      <div class="side-bottom">
+        <div class="side-note">Seu trabalho merece<br><b>um lugar à altura.</b></div>
+        <div class="profile-mini"><div id="miniAvatar" class="avatar-mini"></div><div style="min-width:0"><div id="miniName" class="mini-name"></div><div class="mini-label">Artista Kalafrio</div></div></div>
+      </div>
+    </aside>
+    <section class="main">
+      <header class="top"><div class="crumb">KALAFRIO <span style="color:#65635d">/</span> <b id="crumbName">Painel</b></div><div class="top-actions"><a class="back-link" href="/">Ver site público ↗</a><button id="logoutButton" class="logout" type="button">Sair</button></div></header>
+      <div id="pageContent" class="content"></div>
+    </section>
+    <nav id="mobileNav" class="mobile-bar" aria-label="Navegação do painel"></nav>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script>
+    (() => {
+      const API = "/api/artists";
+      const defaults = ["Amanda", "Vortex", "Adam", "Nana", "Max", "GioInk", "Karol", "Nando", "Jujulz"];
+      const state = { token: sessionStorage.getItem("kf_artist_token") || "", artist: null, items: [], page: "overview", artists: defaults };
+      const $ = (id) => document.getElementById(id);
+      const pages = [
+        { id: "overview", label: "Visão geral", icon: "⌂" },
+        { id: "profile", label: "Meu perfil", icon: "◉" },
+        { id: "gallery", label: "Minha galeria", icon: "▧" },
+        { id: "security", label: "Segurança", icon: "⌑" },
+      ];
+      let toastTimer;
+
+      function api(path, options = {}) {
+        const headers = new Headers(options.headers || {});
+        headers.set("Accept", "application/json");
+        if (state.token) headers.set("Authorization", `Bearer ${state.token}`);
+        return fetch(`${API}${path}`, { ...options, headers }).then(async (response) => {
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(data.error || "Não foi possível concluir a operação.");
+          return data;
+        });
+      }
+      function initials(name) { return (name || "K").trim().split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase(); }
+      function toast(message) {
+        const el = $("toast"); el.textContent = message; el.hidden = false; clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => { el.hidden = true; }, 3200);
+      }
+      function setStatus(id, message, type = "") {
+        const el = $(id); el.textContent = message; el.className = `status${type ? ` ${type}` : ""}`;
+      }
+      function populateArtists() {
+        const select = $("artistName"); select.replaceChildren(new Option("Selecione seu nome", ""));
+        state.artists.forEach((name) => select.add(new Option(name, name)));
+      }
+      function setAvatar(container, artist, className) {
+        container.className = className;
+        container.replaceChildren();
+        if (artist?.avatarUrl) {
+          const img = document.createElement("img"); img.src = artist.avatarUrl; img.alt = `Foto de ${artist.name}`; img.loading = "lazy"; container.appendChild(img);
+        } else container.textContent = initials(artist?.name);
+      }
+      function setScreen(screen) {
+        $("loginScreen").hidden = screen !== "login";
+        $("forceScreen").hidden = screen !== "force";
+        $("workspace").hidden = screen !== "workspace";
+      }
+      async function loadArtists() {
+        try {
+          const data = await fetch(`${API}/public`, { headers: { Accept: "application/json" } }).then((r) => { if (!r.ok) throw new Error(); return r.json(); });
+          if (data.artists?.length) state.artists = data.artists.map((artist) => artist.name);
+        } catch (_) { /* Mantém os nomes-base para que a tela de acesso continue utilizável. */ }
+        populateArtists();
+      }
+      function renderNav() {
+        const makeNav = (container) => {
+          container.replaceChildren();
+          pages.forEach((page) => {
+            const button = document.createElement("button"); button.type = "button"; button.className = state.page === page.id ? "active" : "";
+            button.setAttribute("aria-current", state.page === page.id ? "page" : "false");
+            button.innerHTML = `<span class="nav-ico" aria-hidden="true">${page.icon}</span><span>${page.label}</span>`;
+            button.addEventListener("click", () => { state.page = page.id; renderWorkspace(); });
+            container.appendChild(button);
+          });
+        };
+        makeNav($("desktopNav")); makeNav($("mobileNav"));
+      }
+      function mediaElement(item) {
+        const media = document.createElement(item.kind === "video" ? "video" : "img");
+        media.className = "work-media"; media.src = item.url; media.loading = "lazy";
+        if (item.kind === "video") { media.controls = true; media.preload = "metadata"; }
+        else media.alt = item.title || `Trabalho de ${state.artist.name}`;
+        return media;
+      }
+      function workCard(item, removable = false) {
+        const card = document.createElement("article"); card.className = "work-card"; card.appendChild(mediaElement(item));
+        if (removable) {
+          const remove = document.createElement("button"); remove.className = "remove"; remove.type = "button"; remove.textContent = "Remover";
+          remove.setAttribute("aria-label", `Remover ${item.title || "trabalho"}`);
+          remove.addEventListener("click", async () => {
+            if (!window.confirm("Remover este trabalho da sua galeria?")) return;
+            remove.disabled = true;
+            try { await api(`/me/gallery/${encodeURIComponent(item.id)}`, { method: "DELETE" }); await refreshData(); toast("Trabalho removido."); }
+            catch (err) { remove.disabled = false; toast(err.message); }
+          }); card.appendChild(remove);
+        }
+        const info = document.createElement("div"); info.className = "work-info";
+        const title = document.createElement("span"); title.className = "work-title"; title.textContent = item.title || "Sem título";
+        const date = document.createElement("span"); date.className = "work-date";
+        if (item.createdAt) date.textContent = new Date(item.createdAt).toLocaleDateString("pt-BR");
+        info.append(title, date); card.appendChild(info); return card;
+      }
+      function empty(message) { const el = document.createElement("div"); el.className = "empty"; el.textContent = message; return el; }
+      function heading(eyebrow, title, subtitle, action) {
+        const wrap = document.createElement("div");
+        wrap.innerHTML = `<div class="eyebrow">${eyebrow}</div><div class="title-row"><div><h1 class="title">${title}</h1><p class="subtitle">${subtitle}</p></div>${action || ""}</div>`;
+        return wrap;
+      }
+      function overviewPage() {
+        const root = heading("Seu espaço criativo", `Olá, ${state.artist.name}.`, "Acompanhe seu perfil e mantenha seus trabalhos em destaque.", `<span class="date-pill">STUDIO KALAFRIO · PELOTAS</span>`);
+        const banner = document.createElement("section"); banner.className = "welcome";
+        const copy = document.createElement("div"); copy.className = "welcome-copy";
+        const h = document.createElement("h2"); h.textContent = "Sua arte fala por você.";
+        const p = document.createElement("p"); p.textContent = "Atualize sua foto e adicione novos trabalhos. Tudo que publicar aqui aparece na galeria pública do site.";
+        copy.append(h, p); const mark = document.createElement("div"); mark.className = "welcome-mark"; mark.innerHTML = "<span>K</span>"; banner.append(copy, mark); root.appendChild(banner);
+        const stats = document.createElement("div"); stats.className = "stats";
+        [["Trabalhos publicados", String(state.items.length), "Na galeria do estúdio"], ["Foto de perfil", state.artist.avatarUrl ? "Adicionada" : "Pendente", state.artist.avatarUrl ? "Seu rosto no perfil público" : "Adicione uma foto"], ["Bio do perfil", state.artist.bio ? "Completa" : "Em aberto", state.artist.bio ? "Apresentação visível no site" : "Conte um pouco do seu estilo"]].forEach(([label, value, note]) => {
+          const item = document.createElement("div"); item.className = "stat"; item.innerHTML = `<div class="stat-label">${label}</div><div class="stat-value"></div><div class="stat-note">${note}</div>`; item.querySelector(".stat-value").textContent = value; stats.appendChild(item);
+        }); root.appendChild(stats);
+        const sectionHead = document.createElement("div"); sectionHead.className = "section-head"; sectionHead.innerHTML = `<h2>Adicionados recentemente</h2><a href="#galeria">Ver minha galeria</a>`;
+        sectionHead.querySelector("a").addEventListener("click", (e) => { e.preventDefault(); state.page = "gallery"; renderWorkspace(); }); root.appendChild(sectionHead);
+        const grid = document.createElement("div"); grid.className = "short-grid";
+        if (state.items.length) state.items.slice(0, 3).forEach((item) => grid.appendChild(workCard(item)));
+        else grid.appendChild(empty("Sua galeria está pronta para receber o primeiro trabalho."));
+        root.appendChild(grid); return root;
+      }
+      function profilePage() {
+        const root = heading("Presença pública", "Meu perfil", "Cuide da foto e da apresentação que aparecem junto aos seus trabalhos no site.");
+        const layout = document.createElement("div"); layout.className = "split";
+        const formSurface = document.createElement("section"); formSurface.className = "surface";
+        formSurface.innerHTML = `<div class="section-head" style="margin:0 0 18px"><h2>Sobre mim</h2></div><form id="bioForm" class="form-stack"><div class="field"><label for="bio">Apresentação</label><textarea id="bio" maxlength="240" placeholder="Conte seu estilo, referências ou o que você gosta de criar."></textarea><small><span id="bioCount">0</span>/240 caracteres</small></div><div class="form-foot"><button class="btn" type="submit">Salvar apresentação</button><span id="bioStatus" class="status" role="status"></span></div></form>`;
+        formSurface.querySelector("#bio").value = state.artist.bio || "";
+        formSurface.querySelector("#bio").addEventListener("input", (e) => { formSurface.querySelector("#bioCount").textContent = e.target.value.length; });
+        formSurface.querySelector("#bioCount").textContent = (state.artist.bio || "").length;
+        formSurface.querySelector("#bioForm").addEventListener("submit", async (e) => {
+          e.preventDefault(); const button = e.currentTarget.querySelector("button[type=submit]"); button.disabled = true; setStatus("bioStatus", "Salvando…");
+          try { const data = await api("/me/profile", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ bio: formSurface.querySelector("#bio").value }) }); state.artist = data.artist; setStatus("bioStatus", "Apresentação salva.", "success"); syncIdentity(); }
+          catch (err) { setStatus("bioStatus", err.message, "error"); } finally { button.disabled = false; }
+        });
+        const avatarCard = document.createElement("section"); avatarCard.className = "surface avatar-edit";
+        const avatar = document.createElement("div"); setAvatar(avatar, state.artist, "avatar-large");
+        const info = document.createElement("div"); info.innerHTML = `<h3>${state.artist.name}</h3><p>Foto de perfil pública</p>`;
+        const input = document.createElement("input"); input.type = "file"; input.accept = "image/*"; input.setAttribute("aria-label", "Escolher foto de perfil");
+        const label = document.createElement("label"); label.className = "btn secondary"; label.textContent = "Trocar foto"; label.appendChild(input);
+        input.addEventListener("change", async () => {
+          const file = input.files?.[0]; if (!file) return;
+          if (file.size > 50 * 1024 * 1024) { toast("A imagem deve ter até 50 MB."); input.value = ""; return; }
+          const form = new FormData(); form.append("file", file); label.classList.add("busy"); label.textContent = "Enviando…"; label.appendChild(input);
+          try { const data = await api("/me/avatar", { method: "POST", body: form }); state.artist.avatarUrl = data.avatarUrl; syncIdentity(); renderWorkspace(); toast("Foto de perfil atualizada."); }
+          catch (err) { toast(err.message); } finally { label.classList.remove("busy"); label.textContent = "Trocar foto"; label.appendChild(input); input.value = ""; }
+        });
+        info.appendChild(label); avatarCard.append(avatar, info); layout.append(formSurface, avatarCard); root.appendChild(layout); return root;
+      }
+      function galleryPage() {
+        const root = heading("Portfólio", "Minha galeria", "Adicione fotos ou vídeos dos seus trabalhos. Eles ficam visíveis na galeria pública do Kalafrio.");
+        const uploader = document.createElement("section"); uploader.className = "upload-box"; uploader.id = "uploadBox";
+        uploader.innerHTML = `<div class="upload-icon" aria-hidden="true">＋</div><h3>Novos trabalhos, novos olhares.</h3><p>Escolha imagens ou vídeos para publicar na sua galeria. Você pode selecionar mais de um arquivo.</p><div class="upload-actions"><label for="galleryFiles" class="btn">Escolher arquivos</label><span class="btn secondary" style="pointer-events:none">JPG · PNG · WEBP · MP4</span></div><input id="galleryFiles" type="file" accept="image/*,video/*" multiple><div id="uploadStatus" class="status" style="margin-top:12px" role="status"></div>`;
+        const input = uploader.querySelector("#galleryFiles");
+        input.addEventListener("change", async () => {
+          const files = Array.from(input.files || []); if (!files.length) return;
+          if (files.some((file) => file.size > 50 * 1024 * 1024)) { setStatus("uploadStatus", "Cada arquivo deve ter até 50 MB.", "error"); input.value = ""; return; }
+          setStatus("uploadStatus", `Enviando ${files.length} arquivo${files.length === 1 ? "" : "s"}…`); input.disabled = true;
+          try {
+            for (const file of files) { const form = new FormData(); form.append("file", file); await api("/me/gallery", { method: "POST", body: form }); }
+            input.value = ""; await refreshData(); setStatus("uploadStatus", "Trabalhos publicados com sucesso.", "success"); toast("Sua galeria foi atualizada.");
+          } catch (err) { setStatus("uploadStatus", err.message, "error"); }
+          finally { input.disabled = false; }
+        });
+        uploader.addEventListener("dragover", (e) => { e.preventDefault(); uploader.classList.add("drag"); });
+        uploader.addEventListener("dragleave", () => uploader.classList.remove("drag"));
+        uploader.addEventListener("drop", (e) => { e.preventDefault(); uploader.classList.remove("drag"); if (e.dataTransfer?.files?.length) { input.files = e.dataTransfer.files; input.dispatchEvent(new Event("change")); } });
+        root.appendChild(uploader);
+        const header = document.createElement("div"); header.className = "section-head"; header.innerHTML = `<h2>Publicados <span style="color:#85827c;font-weight:400">(${state.items.length})</span></h2>`; root.appendChild(header);
+        const grid = document.createElement("div"); grid.className = "gallery-grid";
+        if (state.items.length) state.items.forEach((item) => grid.appendChild(workCard(item, true)));
+        else grid.appendChild(empty("Ainda não há trabalhos aqui. Escolha seus primeiros arquivos acima."));
+        root.appendChild(grid); return root;
+      }
+      function passwordForm(forced = false) {
+        const root = forced ? null : heading("Acesso e proteção", "Segurança", "Mantenha sua conta pessoal protegida com uma senha exclusiva.");
+        const card = document.createElement("section"); card.className = forced ? "" : "surface";
+        if (!forced) card.innerHTML = `<div class="security-box" style="margin-bottom:22px"><div class="lock" aria-hidden="true">⌑</div><div><b>Sua conta é individual</b><p>Nunca compartilhe sua senha pessoal. A equipe do estúdio não precisa saber qual é.</p></div></div>`;
+        const form = document.createElement("form"); form.className = "form-stack";
+        form.innerHTML = `<div class="field"><label for="currentPassword">Senha atual</label><input id="currentPassword" type="password" autocomplete="current-password" required></div><div class="field"><label for="newPassword">Nova senha</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Pelo menos 8 caracteres" required></div><div class="field"><label for="confirmPassword">Confirme a nova senha</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div><div id="passwordStatus" class="status" role="status"></div><div class="form-foot"><button class="btn" type="submit">Atualizar senha</button></div>`;
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault(); const current = form.querySelector("#currentPassword").value; const next = form.querySelector("#newPassword").value; const confirm = form.querySelector("#confirmPassword").value;
+          if (next !== confirm) { setStatus("passwordStatus", "As senhas novas não coincidem.", "error"); return; }
+          const button = form.querySelector("button[type=submit]"); button.disabled = true; setStatus("passwordStatus", "Atualizando…");
+          try {
+            const data = await api("/auth/change-password", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ currentPassword: current, newPassword: next }) });
+            state.token = data.token; sessionStorage.setItem("kf_artist_token", data.token); state.artist = data.artist;
+            if (forced) { state.page = "overview"; setScreen("workspace"); renderWorkspace(); toast("Senha criada. Seu painel está liberado."); }
+            else { setStatus("passwordStatus", "Senha atualizada.", "success"); form.reset(); toast("Sua senha foi atualizada."); }
+          } catch (err) { setStatus("passwordStatus", err.message, "error"); }
+          finally { button.disabled = false; }
+        });
+        card.appendChild(form); if (root) { root.appendChild(card); return root; } return card;
+      }
+      function renderWorkspace() {
+        if (!state.artist) return;
+        renderNav(); syncIdentity(); $("crumbName").textContent = pages.find((page) => page.id === state.page)?.label || "Painel";
+        const content = $("pageContent"); content.replaceChildren();
+        const page = state.page === "profile" ? profilePage() : state.page === "gallery" ? galleryPage() : state.page === "security" ? passwordForm() : overviewPage();
+        content.appendChild(page);
+      }
+      function syncIdentity() {
+        if (!state.artist) return;
+        $("miniName").textContent = state.artist.name; setAvatar($("miniAvatar"), state.artist, "avatar-mini");
+      }
+      async function refreshData() {
+        const data = await api("/me"); state.artist = data.artist;
+        if (data.requiresPasswordChange || data.artist.requiresPasswordChange) { showForcedPassword(); return; }
+        const gallery = await api("/me/gallery"); state.items = gallery.items || [];
+        renderWorkspace();
+      }
+      function showForcedPassword() {
+        setScreen("force"); $("firstCurrent").value = ""; $("firstNew").value = ""; $("firstConfirm").value = ""; setStatus("forceStatus", "");
+      }
+      async function login(name, password) {
+        const data = await api("/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, password }) });
+        state.token = data.token; state.artist = data.artist; sessionStorage.setItem("kf_artist_token", data.token);
+        if (data.requiresPasswordChange || data.artist.requiresPasswordChange) showForcedPassword(); else { setScreen("workspace"); await refreshData(); }
+      }
+      async function doLogout() {
+        if (state.token) { try { await api("/auth/logout", { method: "POST" }); } catch (_) {} }
+        state.token = ""; state.artist = null; state.items = []; sessionStorage.removeItem("kf_artist_token"); setScreen("login");
+      }
+      $("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault(); const button = $("loginButton"); button.disabled = true; setStatus("loginStatus", "Verificando acesso…");
+        try { await login($("artistName").value, $("loginPassword").value); $("loginPassword").value = ""; setStatus("loginStatus", ""); }
+        catch (err) { setStatus("loginStatus", err.message, "error"); }
+        finally { button.disabled = false; }
+      });
+      $("forcePasswordForm").addEventListener("submit", async (e) => {
+        e.preventDefault(); const current = $("firstCurrent").value; const next = $("firstNew").value;
+        if (next !== $("firstConfirm").value) { setStatus("forceStatus", "As senhas novas não coincidem.", "error"); return; }
+        const button = $("forceSave"); button.disabled = true; setStatus("forceStatus", "Salvando sua senha…");
+        try {
+          const data = await api("/auth/change-password", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ currentPassword: current, newPassword: next }) });
+          state.token = data.token; state.artist = data.artist; sessionStorage.setItem("kf_artist_token", data.token); state.page = "overview"; setScreen("workspace"); await refreshData(); toast("Senha criada. Seu painel está liberado.");
+        } catch (err) { setStatus("forceStatus", err.message, "error"); }
+        finally { button.disabled = false; }
+      });
+      $("forceLogout").addEventListener("click", doLogout); $("logoutButton").addEventListener("click", doLogout);
+      async function start() {
+        await loadArtists();
+        if (!state.token) return;
+        try { await refreshData(); }
+        catch (_) { state.token = ""; state.artist = null; sessionStorage.removeItem("kf_artist_token"); setScreen("login"); }
+      }
+      start();
+    })();
+  </script>
+</body>
+</html>

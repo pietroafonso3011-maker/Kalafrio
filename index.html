@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <title>Studio Kalafrio – Tatuagem e Piercing</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Playfair+Display:wght@500;600&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
 <style>
 :root{--bg:#000;--bg2:#0e0e0e;--bg3:#1a1a1a;--ink:#fff;--mute:#9a9a9a;--line:#2e2e2e;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root{--bg:#000}}
@@ -72,12 +72,13 @@ footer{border-top:1px solid var(--line);padding:32px 24px;text-align:center;colo
 @media(max-width:760px){.two,.row{grid-template-columns:1fr;gap:32px}.bar{flex-direction:column;align-items:flex-start}nav{justify-content:flex-start}nav a{padding:6px 8px}nav a.cta{margin-left:0}.btn.ghost{margin:12px 0 0}section{padding:64px 0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
+<link rel="stylesheet" href="/kalafrio.css">
 </head>
 <body>
 <header><div class="bar">
 <a class="logo" href="#inicio">Kalafrio</a>
 <nav aria-label="Principal">
-<a href="#inicio">Início</a><a href="#estudio">Estúdio</a><a href="#historia">História</a><a href="#equipe">Equipe</a><a href="#galeria">Galeria</a><a href="#piercing">Piercing</a><a href="#contato">Contato</a><a class="cta" href="#orcamento">Orçamento</a>
+<a href="#inicio">Início</a><a href="#estudio">Estúdio</a><a href="#historia">História</a><a href="#equipe">Artistas</a><a href="#galeria">Galeria</a><a href="#piercing">Piercing</a><a href="#contato">Contato</a><a class="cta" href="/painel">Painel do artista</a>
 </nav></div></header>
 
 <main>
@@ -152,28 +153,21 @@ WhatsApp: <a href="#" id="wa" target="_blank" rel="noopener">em breve</a></p>
 <label>Nota<select id="rs"><option value="5">★★★★★ (5)</option><option value="4">★★★★☆ (4)</option><option value="3">★★★☆☆ (3)</option><option value="2">★★☆☆☆ (2)</option><option value="1">★☆☆☆☆ (1)</option></select></label>
 <label>Comentário<textarea id="rt" required></textarea></label>
 <div><button class="btn" type="submit">Publicar avaliação</button><button class="btn ghost" type="button" data-close>Fechar</button></div></form></dialog>
-<dialog id="da" aria-label="Área do artista"><h2>Área do artista</h2>
-<form id="lf"><label>Nome<input id="ln" autocomplete="username" required></label><label>Senha<input id="lp" type="password" autocomplete="current-password" required></label>
-<div><button class="btn" type="submit">Entrar</button><button class="btn ghost" type="button" data-close>Fechar</button></div><p class="hint" id="le" role="alert"></p></form>
-<div id="panel" hidden><p id="who" style="margin-bottom:12px"></p>
-<label>Adicionar fotos ou vídeos<input id="up" type="file" accept="image/*,video/*" multiple></label>
-<div class="grid" id="mine" style="margin-top:18px"></div>
-<p style="margin-top:18px"><button class="btn" id="out" type="button">Sair</button><button class="btn ghost" type="button" data-close>Fechar</button></p>
-<section id="pwChange" hidden><h3>Trocar senha</h3><p class="hint">A senha inicial precisa ser trocada no primeiro acesso.</p><form id="cpf"><label>Senha atual<input id="cpc" type="password" required></label><label>Nova senha<input id="cpn" type="password" minlength="6" required></label><button class="btn" type="submit">Salvar nova senha</button><p class="hint" id="cpe" role="alert"></p></form></section>
-<p class="hint" style="margin-top:14px">Os trabalhos são armazenados na API oficial do Studio Kalafrio.</p></div></dialog>
-<footer>© Studio Kalafrio · <a href="https://www.instagram.com/kalafrio.co/" target="_blank" rel="noopener">@kalafrio.co</a><p style="margin-top:8px"><a href="#artista" id="al">Área do artista</a></p><p class="credit" style="margin-top:8px">Site criado por <a href="https://wa.me/5553992104960" target="_blank" rel="noopener">Pietro</a></p></footer>
+<footer>© Studio Kalafrio · <a href="https://www.instagram.com/kalafrio.co/" target="_blank" rel="noopener">@kalafrio.co</a><p style="margin-top:8px"><a href="/painel">Painel do artista</a></p><p class="credit" style="margin-top:8px">Site criado por <a href="https://wa.me/5553992104960" target="_blank" rel="noopener">Pietro</a></p></footer>
 
 <script>
 var API="/api";
 var WHATSAPP="5553900000000";
 var ARTISTS=["Amanda","Vortex","Adam","Nana","Max","GioInk","Karol","Nando","Jujulz"];
+var ARTIST_DATA=[];
 var PUBLIC_WORKS=[];
 var $=function(i){return document.getElementById(i)};
 function api(path,options){var o=options||{};o.headers=Object.assign({Accept:"application/json"},o.headers||{});return fetch(API+path,o).then(function(r){return r.json().catch(function(){return{}}).then(function(d){if(!r.ok)throw new Error(d.error||"Não foi possível concluir a operação");return d})})}
-function tile(m,mine){var w=document.createElement("div");w.className="mine";var e=document.createElement(m.kind==="video"?"video":"img");e.src=m.url;if(m.kind==="video"){e.controls=true;e.preload="metadata"}else{e.alt="Trabalho de "+(m.artist||me.name);e.loading="lazy"}w.appendChild(e);if(mine){var b=document.createElement("button");b.type="button";b.textContent="Remover";b.onclick=function(){if(!confirm("Remover este trabalho?"))return;api("/artists/me/gallery/"+encodeURIComponent(m.id),{method:"DELETE",headers:{Authorization:"Bearer "+token}}).then(drawMine).catch(function(err){alert(err.message)})};w.appendChild(b)}return w}
-function renderArtists(){$("team").innerHTML=ARTISTS.map(function(a){return '<div class="card"><div class="ph">'+a[0]+'</div><h3>'+a+'</h3><small>Artista</small></div>'}).join("");$("pro").innerHTML=ARTISTS.map(function(a){return '<option>'+a+'</option>'}).join("");$("tabs").textContent="";ARTISTS.forEach(function(a){var b=document.createElement("button");b.type="button";b.textContent=a;b.onclick=function(){show(a)};$("tabs").appendChild(b)});show(ARTISTS[0])}
-function show(a){[].forEach.call($("tabs").children,function(b){b.setAttribute("aria-pressed",b.textContent===a)});var g=$("grid");g.textContent="";var items=PUBLIC_WORKS.filter(function(x){return x.artist===a});if(!items.length){g.innerHTML='<div class="ph">Fotos de '+a+' em breve</div>';return}items.forEach(function(m){g.appendChild(tile(m,false))})}
-function loadPublic(){api("/artists/public").then(function(data){var names=(data.artists||[]).map(function(a){return a.name});if(names.length)ARTISTS=names;PUBLIC_WORKS=data.works||[];renderArtists()}).catch(function(){renderArtists()})}
+function tile(m,mine){var w=document.createElement("div");w.className="mine";var e=document.createElement(m.kind==="video"?"video":"img");e.src=m.url;if(m.kind==="video"){e.controls=true;e.preload="metadata"}else{e.alt="Trabalho de "+(m.artist||"artista");e.loading="lazy"}w.appendChild(e);if(mine){var b=document.createElement("button");b.type="button";b.textContent="Remover";b.onclick=function(){if(!confirm("Remover este trabalho?"))return;api("/artists/me/gallery/"+encodeURIComponent(m.id),{method:"DELETE",headers:{Authorization:"Bearer "+token}}).then(drawMine).catch(function(err){alert(err.message)})};w.appendChild(b)}return w}
+function initials(name){return String(name||"K").trim().split(/\s+/).map(function(part){return part[0]}).join("").slice(0,2).toUpperCase()}
+function renderArtists(){$("team").textContent="";ARTIST_DATA.forEach(function(artist){var card=document.createElement("button");card.type="button";card.className="artist-card";card.setAttribute("aria-label","Ver trabalhos de "+artist.name);var portrait=document.createElement("span");portrait.className="artist-portrait";if(artist.avatarUrl){var img=document.createElement("img");img.src=artist.avatarUrl;img.alt="Retrato de "+artist.name;img.loading="lazy";portrait.appendChild(img)}else{var mark=document.createElement("span");mark.className="artist-monogram";mark.textContent=initials(artist.name);portrait.appendChild(mark)}var copy=document.createElement("span");copy.className="artist-copy";var name=document.createElement("h3");name.textContent=artist.name;var bio=document.createElement("p");bio.textContent=artist.bio||"Artista Kalafrio";var count=document.createElement("small"),n=PUBLIC_WORKS.filter(function(work){return work.artist===artist.name}).length;count.textContent=n+(n===1?" trabalho publicado": " trabalhos publicados");copy.append(name,bio,count);card.append(portrait,copy);card.onclick=function(){show(artist.name);$("galeria").scrollIntoView({behavior:"smooth"})};$("team").appendChild(card)});$("pro").textContent="";var first=document.createElement("option");first.value="";first.textContent="Escolha...";$("pro").appendChild(first);ARTISTS.forEach(function(a){var o=document.createElement("option");o.value=a;o.textContent=a;$("pro").appendChild(o)});$("tabs").textContent="";ARTISTS.forEach(function(a){var b=document.createElement("button");b.type="button";b.textContent=a;b.onclick=function(){show(a)};$("tabs").appendChild(b)});show(ARTISTS[0])}
+function show(a){[].forEach.call($("tabs").children,function(b){b.setAttribute("aria-pressed",b.textContent===a)});var g=$("grid");g.textContent="";var items=PUBLIC_WORKS.filter(function(x){return x.artist===a});if(!items.length){var empty=document.createElement("div");empty.className="ph";empty.textContent="Ainda não há trabalhos publicados por "+a+".";g.appendChild(empty);return}items.forEach(function(m){g.appendChild(tile(m,false))})}
+function loadPublic(){api("/artists/public").then(function(data){ARTIST_DATA=data.artists||[];var names=ARTIST_DATA.map(function(a){return a.name});if(names.length)ARTISTS=names;PUBLIC_WORKS=data.works||[];renderArtists()}).catch(function(){ARTIST_DATA=ARTISTS.map(function(name){return{name:name,avatarUrl:null,bio:"Artista Kalafrio"}});renderArtists()})}
 loadPublic();
 var ids=["pro","nome","tel","desc","tam","local","foto"];
 function ok(){var tel=$("tel").value.replace(/\D/g,"");return ids.every(function(i){var e=$(i);return i==="foto"?e.files.length>0:e.value.trim()!==""})&&tel.length>=10}
@@ -189,14 +183,6 @@ function openD(d){if(!d.open){try{d.showModal()}catch(e){d.setAttribute("open","
 $("openrev").onclick=function(){drawRev();openD($("dr"))};
 $("rf").addEventListener("submit",function(e){e.preventDefault();var l=revs();l.push({name:$("rn").value.trim(),n:+$("rs").value,text:$("rt").value.trim(),ts:Date.now()});localStorage.setItem("kf_rev",JSON.stringify(l));$("rn").value="";$("rt").value="";drawRev()});drawRev();
 [].forEach.call(document.querySelectorAll("[data-close]"),function(b){b.onclick=function(){b.closest("dialog").close()}});
-var token=sessionStorage.getItem("kf_token")||"",me=null;
-function drawMine(){if(!token)return;api("/artists/me/gallery",{headers:{Authorization:"Bearer "+token}}).then(function(data){var g=$("mine");g.textContent="";var items=data.items||[];if(!items.length)g.innerHTML='<p class="hint">Você ainda não postou nada.</p>';items.forEach(function(m){g.appendChild(tile(m,true))})}).catch(function(){token="";sessionStorage.removeItem("kf_token")})}
-function panel(){$("lf").hidden=!!token;$("panel").hidden=!token;if(token){$("who").textContent="Olá, "+me.name+"!";drawMine()}}
-$("lf").addEventListener("submit",function(e){e.preventDefault();api("/artists/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("ln").value.trim(),password:$("lp").value})}).then(function(data){token=data.token;me=data.artist;sessionStorage.setItem("kf_token",token);$("le").textContent="";$("lp").value="";panel();$("pwChange").hidden=!data.requiresPasswordChange}).catch(function(err){$("le").textContent=err.message})});
-$("cpf").addEventListener("submit",function(e){e.preventDefault();api("/artists/auth/change-password",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},body:JSON.stringify({currentPassword:$("cpc").value,newPassword:$("cpn").value})}).then(function(data){me=data.artist;$("pwChange").hidden=true;$("cpc").value="";$("cpn").value="";$("cpe").textContent="Senha atualizada."}).catch(function(err){$("cpe").textContent=err.message})});
-$("out").onclick=function(){api("/artists/auth/logout",{method:"POST",headers:{Authorization:"Bearer "+token}}).catch(function(){}).then(function(){token="";me=null;sessionStorage.removeItem("kf_token");$("pwChange").hidden=true;panel()})};
-$("up").addEventListener("change",function(){var files=[].slice.call(this.files),input=this;Promise.all(files.map(function(file){var form=new FormData();form.append("file",file);return fetch(API+"/artists/me/gallery",{method:"POST",headers:{Authorization:"Bearer "+token},body:form}).then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(d.error||"Falha no upload")})})})).then(function(){input.value="";drawMine();loadPublic()}).catch(function(err){alert(err.message)})});
-function route(){if(location.hash==="#artista"){panel();openD($("da"))}}$("al").addEventListener("click",function(){setTimeout(route,0)});window.addEventListener("hashchange",route);route();
 </script>
 </body>
 </html>
