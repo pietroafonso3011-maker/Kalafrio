@@ -38,7 +38,43 @@ if (!process.env.POSTGRES_URL) {
 
 
 
-export const db = createPool({ connectionString: process.env.POSTGRES_URL || process.env.POSTGRES_URL_NO_SSL || process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL_NON_POOLING });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const db = createPool({ connectionString: process.env.POSTGRES_URL_NO_SSL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL_NON_POOLING });
+
+
+
+
 
 
 
@@ -76,9 +112,6 @@ export const artists = ["Amanda", "Vortex", "Adam", "Nana", "Max", "GioInk", "Ka
 
 
 
-export function send(res, status, body) {
-  res.status(status).json(body);
-}
 
 
 
@@ -87,33 +120,6 @@ export function send(res, status, body) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-export function error(res, status, message) {
-  send(res, status, { error: message });
-}
 
 
 
