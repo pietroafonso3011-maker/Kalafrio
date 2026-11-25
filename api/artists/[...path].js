@@ -166,7 +166,7 @@ export default async function handler(req, res) {
     
     if (parts[0] === "auth" && parts[1] === "login" && req.method === "POST") return login(req, res);
     
-    if (parts[0] === "auth" && parts[1] ==
+    if (parts[0] === "auth" && parts[1] === "change-password" && req.method === "POST") 
 
 
 
