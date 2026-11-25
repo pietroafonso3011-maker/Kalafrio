@@ -159,100 +159,44 @@ WhatsApp: <a href="#" id="wa" target="_blank" rel="noopener">em breve</a></p>
 <label>Adicionar fotos ou vídeos<input id="up" type="file" accept="image/*,video/*" multiple></label>
 <div class="grid" id="mine" style="margin-top:18px"></div>
 <p style="margin-top:18px"><button class="btn" id="out" type="button">Sair</button><button class="btn ghost" type="button" data-close>Fechar</button></p>
-<p class="hint" style="margin-top:14px">Modo demonstração: as postagens ficam salvas só neste navegador. Para aparecerem para todos os visitantes, o site precisa de um servidor (próximo passo).</p></div></dialog>
+<section id="pwChange" hidden><h3>Trocar senha</h3><p class="hint">A senha inicial precisa ser trocada no primeiro acesso.</p><form id="cpf"><label>Senha atual<input id="cpc" type="password" required></label><label>Nova senha<input id="cpn" type="password" minlength="6" required></label><button class="btn" type="submit">Salvar nova senha</button><p class="hint" id="cpe" role="alert"></p></form></section>
+<p class="hint" style="margin-top:14px">Os trabalhos são armazenados na API oficial do Studio Kalafrio.</p></div></dialog>
 <footer>© Studio Kalafrio · <a href="https://www.instagram.com/kalafrio.co/" target="_blank" rel="noopener">@kalafrio.co</a><p style="margin-top:8px"><a href="#artista" id="al">Área do artista</a></p><p class="credit" style="margin-top:8px">Site criado por <a href="https://wa.me/5553992104960" target="_blank" rel="noopener">Pietro</a></p></footer>
 
 <script>
-// Troque pelos dados reais do estúdio
-var WHATSAPP="5553900000000"; // 55 + DDD + número
+var API="/api";
+var WHATSAPP="5553900000000";
 var ARTISTS=["Amanda","Vortex","Adam","Nana","Max","GioInk","Karol","Nando","Jujulz"];
-// Fotos: ARTIST_PHOTO["Amanda"]="url"; GALLERY["Amanda"]=["url1","url2"];
-var ARTIST_PHOTO={},GALLERY={};
+var PUBLIC_WORKS=[];
 var $=function(i){return document.getElementById(i)};
-
-$("team").innerHTML=ARTISTS.map(function(a){
- var p=ARTIST_PHOTO[a];
- return '<div class="card">'+(p?'<img src="'+p+'" alt="'+a+'">':'<div class="ph">'+a[0]+'</div>')+'<h3>'+a+'</h3><small>Artista</small></div>';
-}).join("");
-$("pro").innerHTML+=ARTISTS.map(function(a){return '<option>'+a+'</option>'}).join("");
-
-var cur=ARTISTS[0];
-function idb(){return new Promise(function(ok,no){try{var r=indexedDB.open("kalafrio",1);r.onupgradeneeded=function(){r.result.createObjectStore("m",{keyPath:"id"})};r.onsuccess=function(){ok(r.result)};r.onerror=no}catch(e){no(e)}})}
-function tx(mode,fn){return idb().then(function(d){return new Promise(function(ok,no){var st=d.transaction("m",mode).objectStore("m"),q=fn(st);q.onsuccess=function(){ok(q.result)};q.onerror=no})})}
-function all(){return tx("readonly",function(s){return s.getAll()}).catch(function(){return[]})}
-function tile(m,mine){var w=document.createElement("div");w.className="mine";var e=document.createElement(m.type==="video"?"video":"img"),u=URL.createObjectURL(m.blob);e.src=u;
- if(m.type==="video"){e.controls=true;e.preload="metadata"}else{e.alt="Trabalho de "+m.artist;e.loading="lazy"}
- w.appendChild(e);
- if(mine){var b=document.createElement("button");b.type="button";b.textContent="Remover";b.onclick=function(){if(confirm("Remover esta postagem?"))tx("readwrite",function(s){return s.delete(m.id)}).then(function(){drawMine();show(cur)})};w.appendChild(b)}
- return w}
-function show(a){cur=a;
- [].forEach.call($("tabs").children,function(b){b.setAttribute("aria-pressed",b.textContent===a)});
- all().then(function(l){var g=$("grid");g.textContent="";
-  var it=l.filter(function(x){return x.artist===a}).sort(function(x,y){return y.ts-x.ts});
-  if(!it.length){g.innerHTML=[1,2,3,4,5,6].map(function(){return '<div class="ph">Fotos de '+a+' em breve</div>'}).join("");return}
-  it.forEach(function(m){g.appendChild(tile(m,false))})})}
-ARTISTS.forEach(function(a){
- var b=document.createElement("button");b.type="button";b.textContent=a;b.onclick=function(){show(a)};$("tabs").appendChild(b);
-});
-show(ARTISTS[0]);
-
+function api(path,options){var o=options||{};o.headers=Object.assign({Accept:"application/json"},o.headers||{});return fetch(API+path,o).then(function(r){return r.json().catch(function(){return{}}).then(function(d){if(!r.ok)throw new Error(d.error||"Não foi possível concluir a operação");return d})})}
+function tile(m,mine){var w=document.createElement("div");w.className="mine";var e=document.createElement(m.kind==="video"?"video":"img");e.src=m.url;if(m.kind==="video"){e.controls=true;e.preload="metadata"}else{e.alt="Trabalho de "+(m.artist||me.name);e.loading="lazy"}w.appendChild(e);if(mine){var b=document.createElement("button");b.type="button";b.textContent="Remover";b.onclick=function(){if(!confirm("Remover este trabalho?"))return;api("/artists/me/gallery/"+encodeURIComponent(m.id),{method:"DELETE",headers:{Authorization:"Bearer "+token}}).then(drawMine).catch(function(err){alert(err.message)})};w.appendChild(b)}return w}
+function renderArtists(){$("team").innerHTML=ARTISTS.map(function(a){return '<div class="card"><div class="ph">'+a[0]+'</div><h3>'+a+'</h3><small>Artista</small></div>'}).join("");$("pro").innerHTML=ARTISTS.map(function(a){return '<option>'+a+'</option>'}).join("");$("tabs").textContent="";ARTISTS.forEach(function(a){var b=document.createElement("button");b.type="button";b.textContent=a;b.onclick=function(){show(a)};$("tabs").appendChild(b)});show(ARTISTS[0])}
+function show(a){[].forEach.call($("tabs").children,function(b){b.setAttribute("aria-pressed",b.textContent===a)});var g=$("grid");g.textContent="";var items=PUBLIC_WORKS.filter(function(x){return x.artist===a});if(!items.length){g.innerHTML='<div class="ph">Fotos de '+a+' em breve</div>';return}items.forEach(function(m){g.appendChild(tile(m,false))})}
+function loadPublic(){api("/artists/public").then(function(data){var names=(data.artists||[]).map(function(a){return a.name});if(names.length)ARTISTS=names;PUBLIC_WORKS=data.works||[];renderArtists()}).catch(function(){renderArtists()})}
+loadPublic();
 var ids=["pro","nome","tel","desc","tam","local","foto"];
-function ok(){
- var tel=$("tel").value.replace(/\D/g,"");
- return ids.every(function(i){var e=$(i);return i==="foto"?e.files.length>0:e.value.trim()!==""})&&tel.length>=10;
-}
+function ok(){var tel=$("tel").value.replace(/\D/g,"");return ids.every(function(i){var e=$(i);return i==="foto"?e.files.length>0:e.value.trim()!==""})&&tel.length>=10}
 function check(){$("send").disabled=!ok()}
 ids.forEach(function(i){$(i).addEventListener("input",check);$(i).addEventListener("change",check)});
-$("foto").addEventListener("change",function(){
- var f=this.files[0],p=$("prev");
- if(f){p.src=URL.createObjectURL(f);p.style.display="block"}else p.style.display="none";
-});
-$("f").addEventListener("submit",function(e){
- e.preventDefault();
- if(!ok()){$("msg").textContent="Preencha todos os campos, incluindo telefone com DDD e a foto.";return}
- var t="Olá! Vim do site do Studio Kalafrio e gostaria de fazer um orçamento.\n\nProfissional: "+$("pro").value+
-  "\nNome: "+$("nome").value.trim()+"\nTelefone: "+$("tel").value.trim()+"\nDescrição: "+$("desc").value.trim()+
-  "\nTamanho: "+$("tam").value.trim()+"\nLocal do corpo: "+$("local").value.trim()+"\nFoto de referência: vou anexar na conversa.";
- window.open("https://api.whatsapp.com/send?phone="+WHATSAPP+"&text="+encodeURIComponent(t),"_blank","noopener");
- $("msg").textContent="Abrimos o WhatsApp. Lembre de anexar a foto de referência.";
-});
+$("foto").addEventListener("change",function(){var f=this.files[0],p=$("prev");if(f){p.src=URL.createObjectURL(f);p.style.display="block"}else p.style.display="none"});
+$("f").addEventListener("submit",function(e){e.preventDefault();if(!ok()){$("msg").textContent="Preencha todos os campos, incluindo telefone com DDD e a foto.";return}var t="Olá! Vim do site do Studio Kalafrio e gostaria de fazer um orçamento.\n\nProfissional: "+$("pro").value+"\nNome: "+$("nome").value.trim()+"\nTelefone: "+$("tel").value.trim()+"\nDescrição: "+$("desc").value.trim()+"\nTamanho: "+$("tam").value.trim()+"\nLocal do corpo: "+$("local").value.trim()+"\nFoto de referência: vou anexar na conversa.";window.open("https://api.whatsapp.com/send?phone="+WHATSAPP+"&text="+encodeURIComponent(t),"_blank","noopener");$("msg").textContent="Abrimos o WhatsApp. Lembre de anexar a foto de referência."});
 $("wa").href="https://wa.me/"+WHATSAPP;
-
-/* Avaliações (demo: salvas neste navegador) */
 function revs(){try{return JSON.parse(localStorage.getItem("kf_rev")||"[]")}catch(e){return[]}}
 function st(n){return "★★★★★".slice(0,n)+"☆☆☆☆☆".slice(0,5-n)}
-function drawRev(){var l=revs(),n=l.length,sum=l.reduce(function(a,r){return a+r.n},0),box=$("rl");
- $("avg").textContent=n?(sum/n).toFixed(1).replace(".",","):"–";$("avst").textContent=st(n?Math.round(sum/n):0);
- $("cnt").textContent=n?n+(n>1?" avaliações":" avaliação"):"Seja o primeiro a avaliar";
- box.textContent="";if(!n){box.textContent="Ainda não há avaliações."}
- l.slice().reverse().forEach(function(r){var d=document.createElement("div"),h=document.createElement("b"),s2=document.createElement("span"),p=document.createElement("p");d.className="rev";h.textContent=r.name+" ";s2.className="stars";s2.textContent=st(r.n);p.textContent=r.text;d.appendChild(h);d.appendChild(s2);d.appendChild(p);box.appendChild(d)})}
+function drawRev(){var l=revs(),n=l.length,sum=l.reduce(function(a,r){return a+r.n},0),box=$("rl");$("avg").textContent=n?(sum/n).toFixed(1).replace(".",","):"–";$("avst").textContent=st(n?Math.round(sum/n):0);$("cnt").textContent=n?n+(n>1?" avaliações":" avaliação"):"Seja o primeiro a avaliar";box.textContent="";if(!n)box.textContent="Ainda não há avaliações.";l.slice().reverse().forEach(function(r){var d=document.createElement("div"),h=document.createElement("b"),s2=document.createElement("span"),p=document.createElement("p");d.className="rev";h.textContent=r.name+" ";s2.className="stars";s2.textContent=st(r.n);p.textContent=r.text;d.appendChild(h);d.appendChild(s2);d.appendChild(p);box.appendChild(d)})}
 function openD(d){if(!d.open){try{d.showModal()}catch(e){d.setAttribute("open","")}}}
 $("openrev").onclick=function(){drawRev();openD($("dr"))};
-$("rf").addEventListener("submit",function(e){e.preventDefault();
- var l=revs();l.push({name:$("rn").value.trim(),n:+$("rs").value,text:$("rt").value.trim(),ts:Date.now()});
- try{localStorage.setItem("kf_rev",JSON.stringify(l))}catch(x){}
- $("rn").value="";$("rt").value="";drawRev()});
-drawRev();
+$("rf").addEventListener("submit",function(e){e.preventDefault();var l=revs();l.push({name:$("rn").value.trim(),n:+$("rs").value,text:$("rt").value.trim(),ts:Date.now()});localStorage.setItem("kf_rev",JSON.stringify(l));$("rn").value="";$("rt").value="";drawRev()});drawRev();
 [].forEach.call(document.querySelectorAll("[data-close]"),function(b){b.onclick=function(){b.closest("dialog").close()}});
-
-/* Área do artista (demo) — TROQUE as senhas */
-var PASS={Amanda:"123355",Vortex:"123456",Adam:"123456",Nana:"123456",Max:"123456",GioInk:"123456",Karol:"123456",Nando:"123456",Jujulz:"123456"};
-var me=null;
-function drawMine(){var g=$("mine");g.textContent="";if(!me)return;
- all().then(function(l){var it=l.filter(function(x){return x.artist===me}).sort(function(x,y){return y.ts-x.ts});
-  if(!it.length)g.innerHTML='<p class="hint">Você ainda não postou nada.</p>';
-  it.forEach(function(m){g.appendChild(tile(m,true))})})}
-function panel(){$("lf").hidden=!!me;$("panel").hidden=!me;if(me){$("who").textContent="Olá, "+me+"!";drawMine()}}
-$("lf").addEventListener("submit",function(e){e.preventDefault();
- var k=ARTISTS.filter(function(a){return a.toLowerCase()===$("ln").value.trim().toLowerCase()})[0];
- if(k&&PASS[k]===$("lp").value){me=k;$("le").textContent="";$("lp").value="";panel()}else $("le").textContent="Nome ou senha incorretos."});
-$("out").onclick=function(){me=null;panel()};
-$("up").addEventListener("change",function(){var fs=[].slice.call(this.files),inp=this;
- Promise.all(fs.map(function(f,i){if(f.size>50*1024*1024){alert(f.name+" passa de 50 MB.");return}
-  return tx("readwrite",function(s){return s.put({id:Date.now()+"-"+i+"-"+Math.random(),artist:me,type:f.type.indexOf("video")===0?"video":"image",blob:f,ts:Date.now()})})}))
- .then(function(){inp.value="";drawMine();show(cur)},function(){alert("Não foi possível salvar neste navegador.")})});
-function route(){if(location.hash==="#artista"){panel();openD($("da"))}}
-$("al").addEventListener("click",function(){setTimeout(route,0)});window.addEventListener("hashchange",route);route();
+var token=sessionStorage.getItem("kf_token")||"",me=null;
+function drawMine(){if(!token)return;api("/artists/me/gallery",{headers:{Authorization:"Bearer "+token}}).then(function(data){var g=$("mine");g.textContent="";var items=data.items||[];if(!items.length)g.innerHTML='<p class="hint">Você ainda não postou nada.</p>';items.forEach(function(m){g.appendChild(tile(m,true))})}).catch(function(){token="";sessionStorage.removeItem("kf_token")})}
+function panel(){$("lf").hidden=!!token;$("panel").hidden=!token;if(token){$("who").textContent="Olá, "+me.name+"!";drawMine()}}
+$("lf").addEventListener("submit",function(e){e.preventDefault();api("/artists/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("ln").value.trim(),password:$("lp").value})}).then(function(data){token=data.token;me=data.artist;sessionStorage.setItem("kf_token",token);$("le").textContent="";$("lp").value="";panel();$("pwChange").hidden=!data.requiresPasswordChange}).catch(function(err){$("le").textContent=err.message})});
+$("cpf").addEventListener("submit",function(e){e.preventDefault();api("/artists/auth/change-password",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},body:JSON.stringify({currentPassword:$("cpc").value,newPassword:$("cpn").value})}).then(function(data){me=data.artist;$("pwChange").hidden=true;$("cpc").value="";$("cpn").value="";$("cpe").textContent="Senha atualizada."}).catch(function(err){$("cpe").textContent=err.message})});
+$("out").onclick=function(){api("/artists/auth/logout",{method:"POST",headers:{Authorization:"Bearer "+token}}).catch(function(){}).then(function(){token="";me=null;sessionStorage.removeItem("kf_token");$("pwChange").hidden=true;panel()})};
+$("up").addEventListener("change",function(){var files=[].slice.call(this.files),input=this;Promise.all(files.map(function(file){var form=new FormData();form.append("file",file);return fetch(API+"/artists/me/gallery",{method:"POST",headers:{Authorization:"Bearer "+token},body:form}).then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(d.error||"Falha no upload")})})})).then(function(){input.value="";drawMine();loadPublic()}).catch(function(err){alert(err.message)})});
+function route(){if(location.hash==="#artista"){panel();openD($("da"))}}$("al").addEventListener("click",function(){setTimeout(route,0)});window.addEventListener("hashchange",route);route();
 </script>
 </body>
 </html>
