@@ -104,6 +104,7 @@ async function changePassword(req, res) {
 }
 
 async function publicArtists(req, res) {
+  res.setHeader("Cache-Control", "no-store");
   await ensureSeeded();
   const result = await db.sql`SELECT id, name, avatar_url, bio FROM artists ORDER BY created_at ASC`;
   const works = await db.sql`SELECT w.id, w.artist_id, w.url, w.kind, w.title, w.created_at, a.name AS artist FROM works w JOIN artists a ON a.id = w.artist_id ORDER BY w.created_at DESC`;
