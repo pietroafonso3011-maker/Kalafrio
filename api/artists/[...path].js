@@ -19,8 +19,14 @@ import {
 export const config = { api: { bodyParser: false } };
 
 function route(req) {
-  const value = req.query.path;
-  return Array.isArray(value) ? value : String(value || "").split("/").filter(Boolean);
+  const value = req.query?.path;
+  if (Array.isArray(value)) return value;
+  if (typeof value === "string" && value) return value.split("/").filter(Boolean);
+
+  const pathname = String(req.url || "").split("?")[0];
+  const prefix = "/api/artists/";
+  if (!pathname.startsWith(prefix)) return [];
+  return pathname.slice(prefix.length).split("/").filter(Boolean);
 }
 
 async function ensureSeeded() {
