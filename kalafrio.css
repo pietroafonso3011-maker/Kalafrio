@@ -65,3 +65,40 @@ footer a{color:#dedbd5;text-underline-offset:4px}
  .tabs button{white-space:nowrap}
 }
 @media(prefers-reduced-motion:reduce){.artist-card,.artist-portrait img,.btn{transition:none}}
+
+
+/* Galeria pública: proporção editorial, imagem inteira e visualização ampliada. */
+.grid{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));align-items:start}
+.work-tile{min-width:0;overflow:hidden;border:1px solid #343330;border-radius:10px;background:#111110;transition:border-color .2s ease,transform .2s ease}
+.work-tile:hover{border-color:#77746d;transform:translateY(-2px)}
+.work-open{appearance:none;position:relative;display:block;width:100%;padding:0;border:0;background:transparent;overflow:hidden;cursor:zoom-in}
+.grid img,.grid video{width:100%;aspect-ratio:4/5;object-fit:contain;filter:none;display:block;background:radial-gradient(ellipse at center,#252421 0,#111110 75%)}
+.work-open img{transition:transform .35s ease}
+.work-open:hover img{transform:scale(1.025)}
+.work-expand{position:absolute;right:10px;bottom:10px;padding:5px 10px;border:1px solid #ffffff55;border-radius:999px;background:#080808c9;color:#f4f2ee;font:500 .75rem "Barlow",sans-serif;letter-spacing:.03em;pointer-events:none}
+.work-open:focus-visible{outline:2px solid #f4f2ee;outline-offset:-4px}
+.gallery-viewer{width:min(96vw,1180px);max-width:none;height:min(88dvh,860px);max-height:92dvh;padding:0;overflow:hidden;border:1px solid #55534e;border-radius:14px;background:#111110;color:#f4f2ee}
+.gallery-viewer::backdrop{background:rgba(0,0,0,.9);backdrop-filter:blur(5px)}
+.viewer-shell{display:flex;flex-direction:column;width:100%;height:100%;min-height:0}
+.viewer-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px;border-bottom:1px solid #343330}
+.viewer-title{min-width:0;margin:0;font:600 1rem "Barlow Condensed",sans-serif;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.viewer-actions{display:flex;align-items:center;gap:7px;flex:none}
+.viewer-actions button{min-width:38px;min-height:36px;padding:6px 10px;border:1px solid #4a4945;border-radius:7px;background:#191918;color:#f4f2ee;font:500 .85rem "Barlow",sans-serif;cursor:pointer}
+.viewer-actions button:hover{background:#2a2927;border-color:#8b8881}
+.viewer-actions .viewer-close{min-width:38px;font-size:1.2rem}
+.viewer-stage{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;background:radial-gradient(ellipse at center,#1b1a18 0,#080808 80%)}
+.viewer-canvas{display:grid;place-items:center;width:max-content;min-width:100%;height:max-content;min-height:100%;padding:18px}
+.viewer-image{display:block;max-width:none;max-height:none;object-fit:contain;filter:none}
+@media(max-width:760px){
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .gallery-viewer{width:100vw;height:100dvh;max-height:100dvh;border-left:0;border-right:0;border-radius:0}
+ .viewer-top{gap:8px;padding:10px}
+ .viewer-actions{gap:5px}
+ .viewer-actions button{min-width:34px;min-height:34px;padding:5px 8px}
+ .viewer-canvas{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){.work-tile,.work-open img{transition:none}}
+
+.viewer-zoom-value{min-width:42px;text-align:center;color:#aaa7a0;font:500 .8rem "Barlow",sans-serif}
+.gallery-viewer{height:min(88vh,860px);height:min(88dvh,860px);max-height:92vh;max-height:92dvh}
+@media(max-width:760px){.gallery-viewer{height:100vh;height:100dvh;max-height:100vh;max-height:100dvh}}
