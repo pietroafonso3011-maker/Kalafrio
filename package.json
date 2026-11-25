@@ -1,0 +1,44 @@
+{
+  
+  "name": "kalafrio-site",
+  
+  "private": true,
+  
+  "version": "1.0.0",
+  
+  "type": "module",
+  
+  "scripts": {
+    
+    "check": "node --check api/artists/[...path].js && node --check api/_lib/core.js && node --check api/setup.js && node --check api/health.js"
+    
+  },
+  
+  "dependencies": {
+    
+    "@vercel/blob": "latest",
+    
+    "@vercel/postgres": "latest",
+    
+    "bcryptjs": "latest",
+    
+    "busboy": "latest"
+    
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
