@@ -18,6 +18,23 @@ import {
 
 export const config = { api: { bodyParser: false } };
 
+const CORS_ORIGINS = new Set([
+  "https://kalafrio.vercel.app",
+  "https://8328-iuwj6oi35o1v36ry82wlk-6f542164.us3.manus.computer",
+]);
+
+function applyCors(req, res) {
+  const origin = req.headers.origin;
+  if (typeof origin === "string" && CORS_ORIGINS.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    const currentVary = res.getHeader("Vary");
+    res.setHeader("Vary", currentVary ? `${currentVary}, Origin` : "Origin");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
+    res.setHeader("Access-Control-Max-Age", "86400");
+  }
+}
+
 function route(req) {
   const value = req.query?.path;
   if (Array.isArray(value)) return value;
@@ -170,6 +187,9 @@ async function updateProfile(req, res, artist) {
 }
 
 export default async function handler(req, res) {
+  applyCors(req, res);
+  if (req.method === "OPTIONS") return res.status(204).end();
+
   try {
     await schema();
     const parts = route(req);
